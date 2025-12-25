@@ -1,70 +1,189 @@
-# Getting Started with Create React App
+# 💸 PeerPay – Username-Based Payment Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+PeerPay is a full-stack payment simulation application that allows users to sign up, log in, and send money to other users using unique usernames. The project demonstrates authentication, authorization, database integration, and secure transaction handling using the MERN stack.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+### 🔐 Authentication
+- User Signup & Login
+- Password hashing using **bcrypt**
+- JWT-based authentication
+- Protected routes
+- Proper error handling for invalid credentials
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 💰 Wallet System
+- Each user is assigned an initial wallet balance on signup
+- Balance is stored and managed in MongoDB
+- Real-time balance updates after transactions
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🔄 Payment Functionality
+- Send money using **receiver's username**
+- Validates:
+  - Receiver existence
+  - Sufficient balance
+  - Valid amount
+- Updates sender and receiver balances
+- Saves each transaction in the database
 
-### `npm test`
+### 📄 Transactions
+- Stores sender, receiver, amount, and timestamp
+- Can be extended to show transaction history
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🧠 Tech Stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Frontend
+- **React**
+- **React Router**
+- **Axios**
+- **JavaScript**
+- **HTML / CSS**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Backend
+- **Node.js**
+- **Express.js**
+- **MongoDB**
+- **Mongoose**
+- **JWT (JSON Web Token)**
+- **bcrypt**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 📁 Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+peerpay-payment-app/
+│
+├── backend/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── server.js
+│   └── package.json
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── services/
+│   │   ├── App.js
+│   │   └── index.js
+│   └── package.json
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🔐 Database Models
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### User
+```javascript
+{
+  username: String (unique),
+  email: String,
+  password: String,
+  balance: Number
+}
+```
 
-## Learn More
+### Transaction
+```javascript
+{
+  senderUsername: String,
+  receiverUsername: String,
+  amount: Number,
+  timestamp: Date
+}
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## ⚙️ How to Run the Project Locally
 
-### Code Splitting
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/sbharatdwaj/peerpay-payment-app.git
+cd peerpay-payment-app
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 2️⃣ Backend Setup
+```bash
+cd backend
+npm install
+```
 
-### Analyzing the Bundle Size
+Create a `.env` file:
+```env
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+PORT=5000
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Run backend:
+```bash
+npm start
+```
 
-### Making a Progressive Web App
+### 3️⃣ Frontend Setup
+```bash
+cd ../frontend
+npm install
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**Frontend runs at:** [http://localhost:3000](http://localhost:3000)  
+**Backend runs at:** [http://localhost:5000](http://localhost:5000)
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🔄 Application Flow
+1. User signs up with username, email, and password
+2. JWT token is generated on login
+3. User is redirected to dashboard
+4. User enters receiver username and amount
+5. Backend validates the request
+6. Sender and receiver balances are updated
+7. Transaction is stored in MongoDB
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 🧪 Error Handling
+- Invalid login credentials
+- User not found
+- Insufficient wallet balance
+- Unauthorized access
+- Invalid transaction amount
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🔒 Security Measures
+- Passwords hashed using bcrypt
+- JWT-based authentication
+- Protected API routes
+- Server-side validation
+- No sensitive credentials committed to GitHub
+
+---
+
+## 📌 Future Improvements
+- Transaction history UI
+- Refresh token support
+- Role-based access
+- Payment gateway integration (Razorpay / Stripe)
+- Email notifications
+- Improved UI/UX
+
+---
+
+## 👨‍💻 Author
+**Shivam Kumar**  
+📧 Email: shivambharatdwaj3@gmail.com  
+🔗 GitHub: [https://github.com/sbharatdwaj](https://github.com/sbharatdwaj)  
+🔗 LinkedIn: [https://www.linkedin.com/in/shivambharatdwaj/](https://www.linkedin.com/in/shivambharatdwaj/)
+
+---
+
+**Note:** This is a demo application for educational purposes. Ensure proper security and compliance measures for production use.
